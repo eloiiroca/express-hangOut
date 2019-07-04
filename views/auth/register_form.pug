@@ -10,35 +10,38 @@ html(lang='en')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     
-    h1 Registration form
+    h1 Registration
     
     form(method='POST' action='')
         div.form-group
-            label(for='name') Name:
+            label(for='name') Name
                 input#name.form-control(type='text' name='name' required='true' value=(undefined===user ? '' : user.name))
         div.form-group   
-            label(for='surname') Surname:
+            label(for='surname') Surname
                 input#surname.form-control(type='text' placeholder= 'Optional' name='surname' value=(undefined===user ? '' : user.surname))
         div.form-group
-            label(for='username') Username:
+            label(for='username') Username
                 input#username.form-control(type='text' name='username' required='true' value=(undefined===user ? '' : user.username))
-            if user && user.username
+            if auth_error && auth_error.username
                 span.text-danger Username already in use
         div.form-group  
-            label(for='email') Email:
+            label(for='email') Email
                 input#email.form-control(type='text' name='email' required='true' value=(undefined===user ? '' : user.email))
-            if user && user.email
+            if auth_error && auth_error.email
                 span.text-danger Email already in use
         div.form-group
-            label(for='birthdate') Date of birth:
+            label(for='birthdate') Date of birth
                 input#birthdate.form-control(type='date' name='birthdate' value=(undefined===user ? '' : user.birthdate))
+        div.form-group
+            label(for="password") Password
+                input#password.form-control(type='password' name='password' required='true')
         
         button.btn.btn-primary(type='submit') Submit
     
     if errors
         ul
             for error in errors
-                li!= error.msg
+                li.text-danger!= error.msg
     
     
     

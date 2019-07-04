@@ -5,13 +5,17 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const logger = require('morgan');
+const passport = require('passport');
 
 const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/userRoutes');
 
 //Set up mongoose connection
 const mongoose = require('mongoose');
 const mongoDB = 'mongodb://localhost:27017/hangOutDB';
+
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -22,16 +26,29 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(cors());
+//Other middleware
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'hangOut-secret-test', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+app.use(bodyParser());
 
+app.use(session({ secret: 'hangOut-secret-test', resave: true, saveUninitialized: false}));
 
+app.use(passport.initialize());   // passport initialize middleware
+app.use(passport.session());     // passport session middleware 
+
+require('./config/passport');
+
+//Routes
 app.use('/', indexRouter);
+app.use('/users', usersRouter);
+
+app.use(function(req,res,next){
+  res.locals.currentUser = req.user;
+  next();
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
