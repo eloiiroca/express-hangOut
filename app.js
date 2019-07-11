@@ -11,6 +11,7 @@ const passport = require('passport');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/userRoutes');
+const postsRouter = require('./routes/postRoutes')
 
 //Set up mongoose connection
 const mongoose = require('mongoose');
@@ -44,6 +45,7 @@ require('./config/passport');
 //Routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 
 app.use(function(req,res,next){
   res.locals.currentUser = req.user;

@@ -103,8 +103,10 @@ exports.local_login_post = [
                 else{
                     req.logIn(user, function (err) {
                         if (err) { return next(err); }
+                        else{
+                            res.redirect('/posts');
+                        }
                     });
-                    res.redirect('/success');
                 }
             })(req, res, next);
         }

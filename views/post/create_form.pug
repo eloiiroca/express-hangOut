@@ -1,0 +1,66 @@
+doctype html
+html(lang='en')
+    head
+        title= title
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body(onload='getLocation()')
+        div(class='container-fluid')
+            div(class='row')
+                div(class='col-sm-2')
+                    block sidebar
+                        ul(class='sidebar-nav')
+                            li 
+                                a(href='/posts') Posts
+
+                            li
+                                a(href='/posts/create') New post
+              
+                            li
+                                a(href= '/users/profile') My profile
+                
+                div(class='col-sm-10')
+        
+                    h2 Create new post
+
+                    <p id="demo"></p>
+                    
+                    form(method='POST' action='')
+                        div.form-group
+                            label(for='title') Title
+                                input#title.form-control(type='text' name='title' required='true')
+                        div.form-group
+                            label(for="description") Description
+                                textarea#description.form-control(type="textarea" name='description' rows='3')
+                        div.form-group
+                            label(for="duration") Post lifetime (Minimum: 30min)
+                                input#duration.form-control(type="time" name='duration' min='00:30' required='true')
+                        div.form-group    
+                            label(for="lat") Lat
+                                input#lat.form-control(type="text" name="lat")
+                            label(for="long") Long
+                                input#long.form-control(type="text" name='long')
+
+                        button.btn.btn-primary(type='submit') Create
+
+                    script.
+                        function getLocation() {
+                            var x = document.getElementById("demo");
+                            if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition(callback);
+                            } 
+                            else {
+                                x.innerHTML = "Geolocation is not supported by this browser.";
+                            }
+                        }
+                        function callback(position) {
+                            localStorage.setItem("lat", position.coords.latitude);
+                            $('#lat').val(localStorage["lat"]);
+                            localStorage.setItem("long", position.coords.longitude);
+                            $('#long').val(localStorage["long"]);
+                        }
+        

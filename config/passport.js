@@ -26,7 +26,6 @@ passport.use(new LocalStrategy({
             if(!userFound.validatePassword(password)){
                 return done(null, false, {message: 'Incorrect password'});
             }
-
             return done(null, userFound);
         });
     }
