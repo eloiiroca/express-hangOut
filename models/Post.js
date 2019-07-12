@@ -11,7 +11,7 @@ const postSchema = new Schema(
         expirationDate: {type: Date, required: true},
         description:{type: String, max: 250},
         loc: {
-            type: {type: String},
+            type: {type: String, enum: ['Point'], required: true},
             coordinates: [Number],
         }
     }
