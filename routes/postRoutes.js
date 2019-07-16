@@ -22,4 +22,6 @@ router.get('/create', isLogged(), post_controller.get_create);
 
 router.post('/create', isLogged(), post_controller.post_create);
 
+router.get('/:id', isLogged(), post_controller.post_detail);
+
 module.exports = router;

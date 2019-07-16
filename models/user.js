@@ -15,7 +15,9 @@ const userSchema = new Schema(
         biography: {type: String, max: 1000},
         hash: String,
         salt: String,
-        friends: [{type: Schema.Types.ObjectId, ref:'user'}]
+        friends: [{type: Schema.Types.ObjectId, ref:'user'}],
+        location: [Number],
+        range: {type: Number, default: 2000}
     }
 );
 
@@ -42,6 +44,11 @@ userSchema.virtual('birthdate_formatted')
 userSchema.virtual('full_name')
 .get(function(){
     return this.name + ' ' + this.surname;
+});
+
+userSchema.virtual('url')
+.get(function(){
+    return '/users/'+ this._id;
 });
   
 module.exports = mongoose.model('User', userSchema);

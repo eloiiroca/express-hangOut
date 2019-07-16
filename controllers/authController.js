@@ -104,7 +104,15 @@ exports.local_login_post = [
                     req.logIn(user, function (err) {
                         if (err) { return next(err); }
                         else{
-                            res.redirect('/posts');
+                            var coord = [req.body.long, req.body.lat];
+                            user.location = coord;
+                            user.save(function(err){
+                                if(err){ return next(err); }
+                                else{
+                                    res.redirect('/posts');
+                                    console.log(user);
+                                }
+                            });
                         }
                     });
                 }

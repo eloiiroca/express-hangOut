@@ -38,12 +38,11 @@ html(lang='en')
                                 textarea#description.form-control(type="textarea" name='description' rows='3')
                         div.form-group
                             label(for="duration") Post lifetime (Minimum: 30min)
-                                input#duration.form-control(type="time" name='duration' min='00:30' required='true')
-                        div.form-group    
-                            label(for="lat") Lat
-                                input#lat.form-control(type="text" name="lat")
-                            label(for="long") Long
-                                input#long.form-control(type="text" name='long')
+                                input#duration.form-control(type="time" name='duration' min='00:30' required='true')  
+                            label(for="lat") 
+                                input#lat.form-control(type="hidden" name="lat")
+                            label(for="long") 
+                                input#long.form-control(type="hidden" name='long')
 
                         button.btn.btn-primary(type='submit') Create
 

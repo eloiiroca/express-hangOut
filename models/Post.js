@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const moment = require('moment');
 
 const Schema = mongoose.Schema;
 
@@ -22,5 +22,10 @@ postSchema.index({ "loc": "2dsphere" });
 postSchema.virtual('url').get(function(){
     return '/posts/' + this._id;
 });
+
+postSchema.virtual('duration')
+.get(function(){
+    return "Until " + moment(this.expirationDate).format('h:mm a');
+})
 
 module.exports = mongoose.model('Post', postSchema);
