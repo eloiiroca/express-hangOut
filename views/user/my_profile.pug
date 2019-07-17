@@ -1,0 +1,16 @@
+extends ../layout 
+
+block content
+
+    h1 Profile
+
+    h3 #{user.full_name} - @#{user.username}
+
+    h4 #[strong Birthdate]
+        P #{user.birthdate_formatted}
+        
+    h4 #[strong Email]
+        p #{user.email}
+    
+    h4 #[strong Biography]
+        p #{user.biography}

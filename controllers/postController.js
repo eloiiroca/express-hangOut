@@ -18,6 +18,7 @@ exports.post_list = function(req, res, next) {
                     },
                     spherical: true,
                     maxDistance: range,
+                    query:{ expirationDate: {$gt: Date.now()} },
                     distanceField: 'distance'
                 }
             }]).exec(function(err, postsByDistance){
