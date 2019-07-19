@@ -2,6 +2,7 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 
 const moment = require('moment');
+const async = require('async');
 
 const userService = require('../services/userServices');
 
@@ -89,4 +90,15 @@ exports.post_detail = function(req, res, next){
             res.render('post/post_detail', {post: postFound});
         }
     });
+}
+
+exports.delete_post = function(req, res, next){
+
+    Post.deleteOne({_id: req.body.postid, owner: req.user})
+    .exec(function(err, post){
+        if(err) { return next(err); }
+        else {
+            res.redirect('/posts');
+        }
+    })
 }

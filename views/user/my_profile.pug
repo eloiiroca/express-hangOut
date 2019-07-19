@@ -14,3 +14,21 @@ block content
     
     h4 #[strong Biography]
         p #{user.biography}
+
+    h4 #[strong Max distance]
+        p #{user.range}
+    
+    h4 #[strong Published posts]
+
+        each post in posts
+            li
+                a(href='/posts/'+post._id) #{post.title} - 
+
+                if post.expired
+                    span.text-danger Expired
+                
+                else
+                    span.text-success Available -
+                        form(method='DELETE' action='/posts/delete/')
+                            div.form-group 
+                                input#postid.form-control(type='hidden', name='postid', required='true', value=post._id)

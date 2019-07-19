@@ -26,6 +26,16 @@ postSchema.virtual('url').get(function(){
 postSchema.virtual('duration')
 .get(function(){
     return "Until " + moment(this.expirationDate).format('h:mm a');
-})
+});
+
+postSchema.virtual('expirationDateFormatted')
+.get(function(){
+    return moment(this.expirationDate).format('MMMM Do, h:mm a');
+});
+
+postSchema.methods.expired = function(){
+    var ret = (this.expirationDate.getTime() <= Date.now().getTime());
+    return ret;
+}
 
 module.exports = mongoose.model('Post', postSchema);

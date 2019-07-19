@@ -16,14 +16,14 @@ exports.allUsers = function(req, res, next){
 }
 
 exports.own_profile = function(req, res, next){
-    console.log("Hi");
+
     async.parallel({
         user: function(callback) {
             User.findById(req.user._id)
             .select({hash: 0}).exec(callback)
         },
         user_posts: function(callback){
-            Post.find({'owner': req.user._id}).exec(callback)
+            Post.find({'owner': req.user._id}).sort({expirationDate: -1}).exec(callback)
         }
     }, function(err, results){
         if(err) { return next(err); }
